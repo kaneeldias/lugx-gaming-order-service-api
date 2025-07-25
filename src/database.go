@@ -226,26 +226,21 @@ func GetAllOrders() (GetOrdersResponse, error) {
 		}
 
 		item.TotalPrice = item.UnitPrice * float64(item.Quantity)
-		order.Items = append(order.Items, item)
-
-		// Calculate total price for the order
-		if len(order.Items) > 0 {
-			for _, i := range order.Items {
-				order.TotalPrice += i.TotalPrice
-			}
-		}
 
 		// Check if order already exists in orders
 		exists := false
-		for _, o := range orders {
+		for i, o := range orders {
 			if o.OrderId == order.OrderId {
 				exists = true
 				o.Items = append(o.Items, item)
 				o.TotalPrice += item.TotalPrice
+				orders[i] = o
 				break
 			}
 		}
 		if !exists {
+			order.TotalPrice = item.TotalPrice
+			order.Items = append(order.Items, item)
 			orders = append(orders, order)
 		}
 	}
@@ -254,6 +249,6 @@ func GetAllOrders() (GetOrdersResponse, error) {
 		return nil, fmt.Errorf("error iterating over rows: %w", err)
 	}
 
-	log.Printf("Fetched %d orders\n", len(orders))
+	log.Printf("Fetched %v orders\n", orders)
 	return orders, nil
 }
