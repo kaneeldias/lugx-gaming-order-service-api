@@ -33,6 +33,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: kaneeldias/lugx-gaming-order-service-api:${{ env.SHORT_SHA }}
 
       - name: Build and push Docker image with latest
@@ -41,4 +42,5 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: kaneeldias/lugx-gaming-order-service-api:latest
