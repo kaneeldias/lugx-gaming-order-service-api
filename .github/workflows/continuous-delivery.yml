@@ -50,5 +50,5 @@ jobs:
         with:
           token: ${{ secrets.IAC_REPO_TOKEN }}
           repository: kaneeldias/lugx-gaming-iac
-          event-type: update-image-and-deploy
+          event-type: update-order-image-and-deploy
           client-payload: '{"image-tag": "${{ env.SHORT_SHA }}"}'
